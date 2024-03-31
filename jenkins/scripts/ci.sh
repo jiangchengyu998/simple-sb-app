@@ -28,4 +28,4 @@ echo "Spring Boot 应用端口号是: $port"
 echo 'The following command runs and outputs the execution of your Java'
 echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 set -x
-docker build --build-arg NAME="${NAME}" VERSION="${VERSION}" PORT="${port}" ../../
+docker build --build-arg NAME="${NAME}" VERSION="${VERSION}" PORT="${port}" -f ../../Dockerfile
