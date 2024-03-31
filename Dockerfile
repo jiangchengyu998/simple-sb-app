@@ -1,5 +1,5 @@
-# 使用官方 adoptopenjdk:17-jdk-hotspot 镜像作为基础镜像
-FROM adoptopenjdk:17-jdk-hotspot
+# 使用官方 openjdk:17-jdk-alpine 镜像作为基础镜像
+FROM openjdk:17-jdk-alpine
 
 # 设置工作目录
 WORKDIR /app
