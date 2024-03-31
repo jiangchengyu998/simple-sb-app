@@ -8,8 +8,8 @@ WORKDIR /app
 ARG NAME
 ARG VERSION
 RUN echo $NAME-$VERSION
-COPY target/$NAME-$VERSION.jar $NAME-$VERSION.jar
-#COPY target/*.jar app.jar
+#COPY target/$NAME-$VERSION.jar $NAME-$VERSION.jar
+COPY target/*.jar app.jar
 
 # 对外暴露的端口号
 ARG PORT
@@ -17,4 +17,5 @@ RUN echo $PORT
 EXPOSE $PORT
 
 # 容器启动时运行的命令
-CMD ["java", "-jar", "$NAME-$VERSION.jar"]
+#CMD ["java", "-jar", "$NAME-$VERSION.jar"]
+CMD ["java", "-jar", "app.jar"]
