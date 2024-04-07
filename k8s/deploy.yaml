@@ -4,9 +4,9 @@ metadata:
   name: simple-sb-app
   labels:
     app: simple-sb-app
-    update: "2"
+    update: ddUPDATEME
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: simple-sb-app
@@ -24,10 +24,11 @@ spec:
             httpGet:
               path: /hello
               port: 6060
-            initialDelaySeconds: 40
+            initialDelaySeconds: 30
           livenessProbe:
             httpGet:
               path: /hello
               port: 6060
+            initialDelaySeconds: 30
             periodSeconds: 10
             failureThreshold: 2
