@@ -30,9 +30,8 @@ pipeline {
         stage('push-to-docker-hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'my-docker-hub-id', passwordVariable: 'pwd', usernameVariable: 'usr')]) {
-                        sh "NAME=`mvn -q -DforceStdout help:evaluate -Dexpression=project.name`"
-                        sh "`docker login -u $usr -p $pwd`"
-                        sh "docker push jiangchengyu/${NAME}"
+                        sh "docker login -u $usr -p $pwd"
+                        sh "docker push jiangchengyu/`mvn -q -DforceStdout help:evaluate -Dexpression=project.name`"
                 }
             }
         }
