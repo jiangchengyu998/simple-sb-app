@@ -37,8 +37,12 @@ pipeline {
         }
         stage('cd') {
             steps {
-                sh "sed -i 's/UPDATEME/=`date +%s`/g' k8s/deploy.yaml"
-                sh "kubectl apply -f k8s/*"
+                script {
+                    // 在 script 块中使用变量
+                    def current_time=System.currentTimeMillis()
+                    sh "sed -i \"s/dd.*/dd${current_time}/g\" k8s/deploy.yaml"
+                    sh "kubectl apply -f k8s/*"
+                }
             }
         }
     }
