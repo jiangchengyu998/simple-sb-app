@@ -30,3 +30,4 @@ echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
 set -x
 pwd
 docker build --build-arg NAME="${NAME}" --build-arg VERSION="${VERSION}" --build-arg PORT="${port}" -t "${NAME}" .
+docker tag "${NAME}" jiangchengyu/"${NAME}"

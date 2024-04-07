@@ -21,10 +21,21 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
+        stage('ci') {
             steps {
                 sh 'chmod +x ./jenkins/scripts/ci.sh'
                 sh './jenkins/scripts/ci.sh'
+            }
+        }
+        stage('push-to-docker-hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'my-docker-hub-id', passwordVariable: 'pwd', usernameVariable: 'usr')]) {
+                    script {
+                        NAME=mvn -q -DforceStdout help:evaluate -Dexpression=project.name
+                        docker login hub.docker.com -u ${usr} -p ${pwd}
+                        docker push jiangchengyu/${NAME}
+                    }
+                }
             }
         }
     }
