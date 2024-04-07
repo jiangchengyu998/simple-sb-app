@@ -9,7 +9,7 @@ metadata:
     owner: "John Doe"
     update: ddUPDATEME
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: simple-sb-app
