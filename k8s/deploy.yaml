@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-sb-app
+  labels:
+    app: simple-sb-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simple-sb-app
+  template:
+    metadata:
+      labels:
+        app: simple-sb-app
+    spec:
+      containers:
+        - name: simple-sb-app
+          image: jiangchengyu/simple-sb-app:latest
+          ports:
+            - containerPort: 6060
+          readinessProbe:
+            httpGet:
+              path: /hello
+              port: 6060
+          livenessProbe:
+            httpGet:
+              path: /hello
+              port: 6060
