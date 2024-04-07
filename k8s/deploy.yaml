@@ -4,6 +4,9 @@ metadata:
   name: simple-sb-app
   labels:
     app: simple-sb-app
+  annotations:
+    description: "This is an example deployment"
+    owner: "John Doe"
     update: ddUPDATEME
 spec:
   replicas: 1
@@ -18,6 +21,7 @@ spec:
       containers:
         - name: simple-sb-app
           image: jiangchengyu/simple-sb-app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 6060
           readinessProbe:
