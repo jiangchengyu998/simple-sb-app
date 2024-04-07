@@ -35,5 +35,10 @@ pipeline {
                 }
             }
         }
+        stage('cd') {
+            steps {
+                sh "kubectl apply -f k8s/*"
+            }
+        }
     }
 }
