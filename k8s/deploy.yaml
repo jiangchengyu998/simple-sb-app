@@ -6,7 +6,7 @@ metadata:
     app: simple-sb-app
   annotations:
     description: "This is an example deployment"
-    owner: "John Doe"
+    owner: "hanke jiang"
     update: ddUPDATEME
 spec:
   replicas: 3
@@ -24,7 +24,7 @@ spec:
         app: simple-sb-app
       annotations:
         description: "This is an example deployment"
-        owner: "John Doe"
+        owner: "hanke jiang"
         update: ddUPDATEME
     spec:
       containers:
