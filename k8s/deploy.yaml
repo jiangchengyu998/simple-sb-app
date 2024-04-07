@@ -23,7 +23,10 @@ spec:
             httpGet:
               path: /hello
               port: 6060
+            initialDelaySeconds: 40
           livenessProbe:
             httpGet:
               path: /hello
               port: 6060
+            periodSeconds: 10
+            failureThreshold: 2
