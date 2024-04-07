@@ -10,6 +10,11 @@ metadata:
     update: ddUPDATEME
 spec:
   replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   selector:
     matchLabels:
       app: simple-sb-app
