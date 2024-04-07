@@ -4,6 +4,7 @@ metadata:
   name: simple-sb-app
   labels:
     app: simple-sb-app
+    update: "2"
 spec:
   replicas: 3
   selector:
