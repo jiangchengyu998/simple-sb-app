@@ -22,6 +22,10 @@ spec:
     metadata:
       labels:
         app: simple-sb-app
+      annotations:
+        description: "This is an example deployment"
+        owner: "John Doe"
+        update: ddUPDATEME
     spec:
       containers:
         - name: simple-sb-app
