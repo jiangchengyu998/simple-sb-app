@@ -37,7 +37,7 @@ pipeline {
         }
         stage('cd') {
             steps {
-                sh "sed -i "s/UPDATEME/'date +%s'/g" y.yaml"
+                sh "sed -i 's/UPDATEME/=`date +%s`/g' deploy.yaml"
                 sh "kubectl apply -f k8s/*"
             }
         }
