@@ -45,5 +45,14 @@ pipeline {
                 }
             }
         }
+        stage('info') {
+            steps {
+                script {
+                    // 在 script 块中使用变量
+                    sh "kubectl get svc -o wide -n nginx-gateway"
+                    sh "kubectl get HTTPRoute"
+                }
+            }
+        }
     }
 }
