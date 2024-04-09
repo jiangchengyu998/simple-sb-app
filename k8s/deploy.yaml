@@ -27,6 +27,7 @@ spec:
         owner: "hanke jiang"
         update: ddUPDATEME
     spec:
+      terminationGracePeriodSeconds: 3600  # pod-level
       containers:
         - name: simple-sb-app
           image: jiangchengyu/simple-sb-app:latest
@@ -38,6 +39,8 @@ spec:
               path: /hello
               port: 6060
             initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 2
           livenessProbe:
             httpGet:
               path: /hello
@@ -45,3 +48,10 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 10
             failureThreshold: 2
+            terminationGracePeriodSeconds: 60
+#          startupProbe:
+#            httpGet:
+#              path: /hello
+#              port: 6060
+#            failureThreshold: 30
+#            periodSeconds: 10
