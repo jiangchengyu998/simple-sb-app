@@ -1,30 +1,9 @@
 pipeline {
-    agent any
+    agent { docker { image 'maven:3.9.9-eclipse-temurin-21-alpine' } }
     stages {
-        stage('Proxy') {
+        stage('build') {
             steps {
-                sh 'export https_proxy="http://192.168.101.49:7890"'
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh 'chmod +x ./jenkins/scripts/deliver.sh'
-                sh './jenkins/scripts/deliver.sh'
+                sh 'mvn --version'
             }
         }
     }
