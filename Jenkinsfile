@@ -19,7 +19,7 @@ pipeline {
       }
       stage('构建代码') {
           steps {
-              sh '/var/jenkins_home/maven/bin/mvn clean package -DskipTests'
+              sh '/var/jenkins_home/maven/bin/mvn clean install package -DskipTests'
           }
       }
       stage('检测代码质量') {
