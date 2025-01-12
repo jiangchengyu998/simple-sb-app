@@ -39,10 +39,10 @@ pipeline {
           steps {
               sh '''
                   mv target/*.jar docker/$spProjectName.jar
-                  docker build -t $spProjectName:$tag ./docker
+                  docker build -t $spProjectName:${tag##*/} ./docker
                   docker login -u $harborUser -p $harborPasswd $harborHost
-                  docker tag $spProjectName:$tag $harborHost/$harborRepo/$spProjectName:$tag
-                  docker push $harborHost/$harborRepo/$spProjectName:$tag
+                  docker tag $spProjectName:${tag##*/} $harborHost/$harborRepo/$spProjectName:${tag##*/}
+                  docker push $harborHost/$harborRepo/$spProjectName:${tag##*/}
                   docker image prune -f
               '''
           }
@@ -57,7 +57,7 @@ pipeline {
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName $tag $container_port $host_port",
+                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName ${tag##*/} $container_port $host_port",
                                 execTimeout: 120000,
                                 flatten: false,
                                 makeEmptyDirs: false,
