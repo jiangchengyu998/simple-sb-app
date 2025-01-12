@@ -14,7 +14,7 @@ pipeline {
           steps {
               checkout([$class: 'GitSCM', branches: [[name: '${tag}']],
               extensions: [], userRemoteConfigs: [[url:
-              "https://github.com/jiangchengyu998/$spProjectName.git"]]])
+              'https://github.com/jiangchengyu998/simple-sb-app.git']]])
           }
       }
       stage('构建代码') {
