@@ -38,7 +38,7 @@ pipeline {
       stage('制作自定义镜像并发布Harbor') {
           steps {
               sh '''
-                  mv target/*.jar docker/
+                  mv target/*.jar docker/$spProjectName.jar
                   docker build -t $spProjectName:$tag ./docker
                   docker login -u $harborUser -p $harborPasswd $harborHost
                   docker tag $spProjectName:$tag $harborHost/$harborRepo/$spProjectName:$tag
