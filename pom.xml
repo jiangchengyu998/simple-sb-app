@@ -50,7 +50,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.example.demo.DemoApplication</mainClass>
+                    <mainClass>com.example.simplesbapp.SimpleSbAppApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
