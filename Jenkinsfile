@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-//    options {
-//         ansiColor('xterm')
-//    }
-
   environment{
       harborHost = '192.168.101.102:80'
       harborRepo = 'repo'
@@ -32,14 +28,8 @@ pipeline {
       }
       stage('构建代码') {
           steps {
-              script {
-                  try {
-                    echo "Extracted Branch: ${branch}"
-                  } catch (Exception e) {
-                    error "Custom Error: Command failed. Please check the logs for details."
-                  }
-                  sh '/var/jenkins_home/maven/bin/mvn clean install package -DskipTests'
-              }
+              echo "Extracted Branch: ${branch}"
+              sh '/var/jenkins_home/maven/bin/mvn clean install package -DskipTests'
           }
       }
       stage('检测代码质量') {
