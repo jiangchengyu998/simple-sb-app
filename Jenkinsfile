@@ -21,22 +21,18 @@ pipeline {
           }
       }
       stage('提取版本号') {
-          steps {
-              script {
-                  // 使用 Maven 解析 `pom.xml` 文件中的版本号
-                  def version = sh(
-                      script: "xpath -q -e '/project/version/text()' pom.xml",
-                      returnStdout: true
-                  ).trim()
-
-                  // 打印提取的版本信息
-                  echo "Extracted version from pom.xml: ${version}"
-
-                  // 将提取的版本赋值给环境变量 `tag`
-                  env.tag = version
-              }
-          }
+            steps {
+                script {
+                    def version = sh(
+                        script: "/var/jenkins_home/maven/bin/mvn help:evaluate -Dexpression=project.version -q -DforceStdout",
+                        returnStdout: true
+                    ).trim()
+                    echo "Extracted version from Maven: ${version}"
+                    env.tag = version
+                }
+            }
       }
+
       stage('构建代码') {
           steps {
               sh '/var/jenkins_home/maven/bin/mvn clean install package -DskipTests'
