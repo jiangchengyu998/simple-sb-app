@@ -23,12 +23,12 @@ pipeline {
                   // 提取 main 部分
                   def branch = params.tag.tokenize('/').last()
                   echo "Extracted Branch: ${branch}"
+                  env.MY_VAR = "${branch}"
               }
           }
       }
       stage('构建代码') {
           steps {
-              echo "Extracted Branch: ${branch}"
               sh '/var/jenkins_home/maven/bin/mvn clean install package -DskipTests'
           }
       }
@@ -49,10 +49,10 @@ pipeline {
           steps {
               sh '''
                   mv target/*.jar docker/$spProjectName.jar
-                  docker build -t $spProjectName:$tag ./docker
+                  docker build -t $spProjectName:${env.MY_VAR} ./docker
                   docker login -u $harborUser -p $harborPasswd $harborHost
-                  docker tag $spProjectName:$tag $harborHost/$harborRepo/$spProjectName:$tag
-                  docker push $harborHost/$harborRepo/$spProjectName:$tag
+                  docker tag $spProjectName:${env.MY_VAR} $harborHost/$harborRepo/$spProjectName:${env.MY_VAR}
+                  docker push $harborHost/$harborRepo/$spProjectName:${env.MY_VAR}
                   docker image prune -f
               '''
           }
@@ -67,7 +67,7 @@ pipeline {
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName $tag $container_port $host_port",
+                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName ${env.MY_VAR} $container_port $host_port",
                                 execTimeout: 120000,
                                 flatten: false,
                                 makeEmptyDirs: false,
