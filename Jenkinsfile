@@ -68,7 +68,7 @@ pipeline {
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName "${env.MY_VAR}" $container_port $host_port",
+                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName '${env.MY_VAR}' $container_port $host_port",
                                 execTimeout: 120000,
                                 flatten: false,
                                 makeEmptyDirs: false,
