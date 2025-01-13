@@ -48,7 +48,7 @@ pipeline {
       stage('制作自定义镜像并发布Harbor') {
           steps {
               sh '''
-                  echo "MY_VAR value: "${env.MY_VAR}"" // 检查 MY_VAR 是否有值
+                  echo "MY_VAR value: '${env.MY_VAR}'"
                   mv target/*.jar docker/$spProjectName.jar
                   docker build -t $spProjectName:"${env.MY_VAR}" ./docker
                   docker login -u $harborUser -p $harborPasswd $harborHost
