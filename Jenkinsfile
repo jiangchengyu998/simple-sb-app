@@ -48,12 +48,12 @@ pipeline {
       stage('制作自定义镜像并发布Harbor') {
           steps {
               sh '''
-                  echo "MY_VAR value: ${env.MY_VAR}" // 检查 MY_VAR 是否有值
+                  echo "MY_VAR value: "${env.MY_VAR}"" // 检查 MY_VAR 是否有值
                   mv target/*.jar docker/$spProjectName.jar
-                  docker build -t $spProjectName:${env.MY_VAR} ./docker
+                  docker build -t $spProjectName:"${env.MY_VAR}" ./docker
                   docker login -u $harborUser -p $harborPasswd $harborHost
-                  docker tag $spProjectName:${env.MY_VAR} $harborHost/$harborRepo/$spProjectName:${env.MY_VAR}
-                  docker push $harborHost/$harborRepo/$spProjectName:${env.MY_VAR}
+                  docker tag $spProjectName:"${env.MY_VAR}" $harborHost/$harborRepo/$spProjectName:"${env.MY_VAR}"
+                  docker push $harborHost/$harborRepo/$spProjectName:"${env.MY_VAR}"
                   docker image prune -f
               '''
           }
@@ -68,7 +68,7 @@ pipeline {
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName ${env.MY_VAR} $container_port $host_port",
+                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName "${env.MY_VAR}" $container_port $host_port",
                                 execTimeout: 120000,
                                 flatten: false,
                                 makeEmptyDirs: false,
