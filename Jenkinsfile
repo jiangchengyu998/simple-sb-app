@@ -17,16 +17,6 @@ pipeline {
               'https://github.com/jiangchengyu998/simple-sb-app.git']]])
           }
       }
-      stage('Extract Branch') {
-          steps {
-              script {
-                  // 提取 main 部分
-                  def branch = params.tag.tokenize('/').last()
-                  echo "Extracted Branch: ${branch}"
-                  env.MY_VAR = "${branch}"
-              }
-          }
-      }
       stage('构建代码') {
           steps {
               sh '/var/jenkins_home/maven/bin/mvn clean install package -DskipTests'
@@ -48,12 +38,11 @@ pipeline {
       stage('制作自定义镜像并发布Harbor') {
           steps {
               sh '''
-                  echo "MY_VAR value: '${env.MY_VAR}'"
                   mv target/*.jar docker/$spProjectName.jar
-                  docker build -t $spProjectName:"${env.MY_VAR}" ./docker
+                  docker build -t $spProjectName:$tag ./docker
                   docker login -u $harborUser -p $harborPasswd $harborHost
-                  docker tag $spProjectName:"${env.MY_VAR}" $harborHost/$harborRepo/$spProjectName:"${env.MY_VAR}"
-                  docker push $harborHost/$harborRepo/$spProjectName:"${env.MY_VAR}"
+                  docker tag $spProjectName:$tag $harborHost/$harborRepo/$spProjectName:$tag
+                  docker push $harborHost/$harborRepo/$spProjectName:$tag
                   docker image prune -f
               '''
           }
@@ -68,7 +57,7 @@ pipeline {
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName '${env.MY_VAR}' $container_port $host_port",
+                                execCommand: "deploy.sh $harborHost $harborRepo $spProjectName $tag $container_port $host_port",
                                 execTimeout: 120000,
                                 flatten: false,
                                 makeEmptyDirs: false,
