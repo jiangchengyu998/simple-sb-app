@@ -17,8 +17,18 @@ pipeline {
               'https://github.com/jiangchengyu998/simple-sb-app.git']]])
           }
       }
+      stage('Extract Branch') {
+          steps {
+              script {
+                  // 提取 main 部分
+                  def branch = params.tag.tokenize('/').last()
+                  echo "Extracted Branch: ${branch}"
+              }
+          }
+      }
       stage('构建代码') {
           steps {
+              echo "Extracted Branch: ${branch}"
               sh '/var/jenkins_home/maven/bin/mvn clean install package -DskipTests'
           }
       }
