@@ -1,6 +1,12 @@
 pipeline {
   agent any
 
+  options {
+        // 开启详细日志记录
+        ansiColor('xterm')
+        timestamps()
+  }
+
   environment{
       harborHost = '192.168.101.102:80'
       harborRepo = 'repo'
