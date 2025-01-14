@@ -66,12 +66,14 @@ pipeline {
           }
       }
       stage('部署k8s资源') {
-          script {
-              sh '''
-                  export KUBECONFIG=/root/kubeconfig
-                  kubectl apply -f k8s/deployment.yaml
-                  kubectl apply -f k8s/service.yaml
-              '''
+          steps {
+              script {
+                  sh '''
+                      export KUBECONFIG=/root/kubeconfig
+                      kubectl apply -f k8s/deployment.yaml
+                      kubectl apply -f k8s/service.yaml
+                  '''
+              }
           }
       }
   }
