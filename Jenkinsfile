@@ -65,34 +65,13 @@ pipeline {
               '''
           }
       }
-      stage('目标服务器拉取镜像并运行') {
-          steps {
-              sshPublisher(
-                  publishers: [
-                      sshPublisherDesc(
-                          configName: '102-jenkins',
-                          transfers: [
-                              sshTransfer(
-                                  cleanRemote: false,
-                                  excludes: '',
-                                  execCommand: "deploy.sh $harborHost $harborRepo $spProjectName $tag $container_port $host_port",
-                                  execTimeout: 120000,
-                                  flatten: false,
-                                  makeEmptyDirs: false,
-                                  noDefaultExcludes: false,
-                                  patternSeparator: '[, ]+',
-                                  remoteDirectory: '',
-                                  remoteDirectorySDF: false,
-                                  removePrefix: '',
-                                  sourceFiles: ''
-                              )
-                          ],
-                          usePromotionTimestamp: false,
-                          useWorkspaceInPromotion: false,
-                          verbose: false
-                      )
-                  ]
-              )
+      stage('部署k8s资源') {
+          script {
+              sh '''
+                  export KUBECONFIG=/root/kubeconfig
+                  kubectl apply -f k8s/deployment.yaml
+                  kubectl apply -f k8s/service.yaml
+              '''
           }
       }
   }

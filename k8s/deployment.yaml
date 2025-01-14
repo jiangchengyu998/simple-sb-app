@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app
+  namespace: java-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: java-app
+  template:
+    metadata:
+      labels:
+        app: java-app
+    spec:
+      containers:
+        - name: java-app
+          image: 192.168.101.102:80/repo/simple-sb-app:0.0.1-SNAPSHOT # 替换为你的镜像
+          ports:
+            - containerPort: 8080
