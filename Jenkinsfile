@@ -70,6 +70,7 @@ pipeline {
               script {
                   sh '''
                       export KUBECONFIG=/var/jenkins_home/kubeconfig
+                      sed -i 's/VERSION/$tag/g' k8s/deployment.yaml
                       /var/jenkins_home/kubectl apply -f k8s/deployment.yaml
                       /var/jenkins_home/kubectl apply -f k8s/service.yaml
                   '''

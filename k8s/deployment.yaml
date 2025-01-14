@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: java-app
-          image: 192.168.101.102:80/repo/simple-sb-app:0.0.1-SNAPSHOT # 替换为你的镜像
+          image: 192.168.101.102:80/repo/simple-sb-app:VERSION # 替换为你的镜像
           ports:
             - containerPort: 8080
