@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>聊天室</title>
+    <script>
+        let ws;
+        function connect() {
+            ws = new WebSocket("ws://localhost:8080/chat");
+            ws.onmessage = function (event) {
+                const chatBox = document.getElementById("chat-box");
+                chatBox.value += event.data + "\n";
+            };
+            ws.onclose = function () {
+                alert("连接已关闭");
+            };
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("message");
+            ws.send(input.value);
+            input.value = "";
+        }
+    </script>
+</head>
+<body onload="connect()">
+<h1>聊天室</h1>
+<textarea id="chat-box" rows="20" cols="50" readonly></textarea><br>
+<input id="message" type="text" placeholder="输入消息">
+<button onclick="sendMessage()">发送</button>
+</body>
+</html>
