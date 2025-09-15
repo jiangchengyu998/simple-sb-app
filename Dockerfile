@@ -1,7 +1,7 @@
 # ————————————————————————————————
 # 第一阶段：编译 (Maven + JDK 8)
 # ————————————————————————————————
-FROM maven:3.8.7-openjdk-8 AS builder
+FROM maven:3.8.5-openjdk-8 AS builder
 
 WORKDIR /build
 
@@ -27,7 +27,7 @@ ENV TZ=Asia/Shanghai \
 WORKDIR /app
 
 # 从构建阶段复制打好的 jar
-COPY --from=builder /build/target/simple-sb-app.jar app.jar
+COPY --from=builder /build/target/*.jar app.jar
 
 # Spring Boot 默认端口 8080
 EXPOSE 8080
