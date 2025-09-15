@@ -18,5 +18,11 @@ public class SimpleSbAppApplication {
         return "hello springboot!";
     }
 
+    
+
+    @GetMapping("/")
+    public String hello(){
+        return "hello springboot!";
+    }
 
 }
