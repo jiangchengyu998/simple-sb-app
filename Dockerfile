@@ -18,18 +18,21 @@ RUN mvn clean package -DskipTests
 # ————————————————————————————————
 # 第二阶段：运行 (JRE 8)
 # ————————————————————————————————
-FROM openjdk:8-jre-slim
+# 1. 定义构建时参数，设置默认端口
+ARG SERVER_PORT=8080
 
-# 设置时区、工作目录等
+# 2. 设置时区、工作目录和环境变量
 ENV TZ=Asia/Shanghai \
-    JAVA_OPTS=""
+    JAVA_OPTS="" \
+    SERVER_PORT=${SERVER_PORT} # 将构建参数传递给环境变量
 
 WORKDIR /app
 
 # 从构建阶段复制打好的 jar
 COPY --from=builder /build/target/*.jar app.jar
 
-# Spring Boot 默认端口 8080
-EXPOSE 8080
+# 3. 使用环境变量中定义的端口
+EXPOSE ${SERVER_PORT}
 
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]
+# 4. 启动命令中使用环境变量
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar --server.port=${SERVER_PORT}"]
