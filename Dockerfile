@@ -24,7 +24,7 @@ ARG SERVER_PORT=8080
 # 2. 设置时区、工作目录和环境变量
 ENV TZ=Asia/Shanghai \
     JAVA_OPTS="" \
-    SERVER_PORT=${SERVER_PORT} # 将构建参数传递给环境变量
+    SERVER_PORT=${SERVER_PORT} 
 
 WORKDIR /app
 
