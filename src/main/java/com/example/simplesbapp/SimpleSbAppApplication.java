@@ -21,8 +21,8 @@ public class SimpleSbAppApplication {
     
 
     @GetMapping("/")
-    public String hello(){
-        return "hello springboot!";
+    public String home(){
+        return "hello springboot home!";
     }
 
 }
